@@ -8,7 +8,7 @@ const Home = ({ vidas, categories, homepage, menus }) => {
   return (
     <Layout menus={menus}>
       <div className="uk-section">
-        <div className="uk-container uk-container-large">
+        <div className="uk-container uk-container-expand">
           <Vida vidas={vidas} />
         </div>
       </div>

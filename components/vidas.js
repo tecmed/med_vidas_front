@@ -10,11 +10,25 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import styles from "../assets/jss/tableStyle.js";
+import { blue, orange, grey } from '@material-ui/core/colors';
+import { CalendarTodayOutlined, 
+        PeopleAltOutlined, 
+        FavoriteBorderOutlined, 
+        FavoriteOutlined, 
+        PersonAddOutlined, 
+        LocalConvenienceStoreOutlined,
+        SyncOutlined} from '@material-ui/icons';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      '& > span': {
+        margin: theme.spacing(3),
+      },
+    },
+  }));
 
 const Vida = ({ vidas }) => {
 
-    const useStyles = makeStyles(styles);
     const classes = useStyles();
 
     const vidasGroup = _.chain(vidas)
@@ -52,28 +66,28 @@ const Vida = ({ vidas }) => {
                     return [
                         <br key={index}></br>,
                         <Typography key={name} variant="h6" className="singular">
-                            <p>{name}</p>
+                            <p style={{ color: orange[700] }}><LocalConvenienceStoreOutlined fontSize="medium" style={{ color: orange[400] }}/>&nbsp;{name}</p>
                         </Typography>]
                     }
                     ).uniq().flatten().value()
                 }
                 </div>,
                 <div key={index + Math.random()}>
-                <TableContainer component={Paper}>
+                <TableContainer component={Paper} className="uk-margin-medium-bottom">
                     <Table aria-label="customized table" >
                         {_.chain(results).groupBy('Publicado').map((rows, pub) => {
                             return [
-                            <caption key={pub} text-align="right">Atualizado em {pub}</caption>
+                            <caption key={pub} text-align="right"><SyncOutlined fontSize="small" style={{ color: grey[400] }}/>&nbsp;Atualizado em {pub}</caption>
                             ]}
                         ).last().uniq().flatten().value()
                     }
                         <TableHead>
                         <TableRow>
-                            <TableCell>Data</TableCell>
-                            <TableCell align="left">Massa&nbsp;Total</TableCell>
-                            <TableCell align="left">SOS&nbsp;Unimed</TableCell>
-                            <TableCell align="left">SOS&nbsp;Medilar</TableCell>
-                            <TableCell align="left">Vendas&nbsp;Novas</TableCell>
+                            <TableCell align="left" style={{ color: blue[900] }}><CalendarTodayOutlined fontSize="small" style={{ color: blue[900] }}></CalendarTodayOutlined>&nbsp;&nbsp;DATA</TableCell>
+                            <TableCell align="left" style={{ color: blue[800] }}><PeopleAltOutlined fontSize="small" style={{ color: blue[900] }}></PeopleAltOutlined>&nbsp;&nbsp;MASSA&nbsp;TOTAL</TableCell>
+                            <TableCell align="left" style={{ color: blue[800] }}><FavoriteBorderOutlined fontSize="small" style={{ color: blue[900] }}></FavoriteBorderOutlined>&nbsp;&nbsp;SOS&nbsp;UNIMED</TableCell>
+                            <TableCell align="left" style={{ color: blue[800] }}><FavoriteOutlined fontSize="small" style={{ color: blue[900] }}></FavoriteOutlined>&nbsp;&nbsp;SOS&nbsp;MEDILAR</TableCell>
+                            <TableCell align="left" style={{ color: blue[800] }}><PersonAddOutlined fontSize="small" style={{ color: blue[900] }}></PersonAddOutlined>&nbsp;&nbsp;VENDAS&nbsp;NOVAS</TableCell>
                         </TableRow>
                         </TableHead>
                         <TableBody>

@@ -1,5 +1,5 @@
   body {
-    background-color: #f8f8f8 !important;
+    background-color: #ffffff !important;
   }
 
   a {
@@ -48,8 +48,9 @@
   }
   
   .navbar-top {
-    background: #ee7728 !important;
+    background: #005ead !important;
     font-family: 'Open Sans';
+    min-height: '55px';
   }
 
   img:hover {

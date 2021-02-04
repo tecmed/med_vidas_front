@@ -16,9 +16,8 @@ const Navigation = ({ menus }) => {
 
   return (
     <div>
-      <AppBar className="navbar-top"position="static">
-
-        <Toolbar variant="dense">
+      <AppBar className="navbar-top" position="static">
+        <Toolbar>
         {menus.map((menu) => {
           return (
                 <Typography variant="h6" key={menu.id} as="li">
