@@ -1,8 +1,8 @@
 import Navigation from "./nav";
 
-const Layout = ({ children, categories, menus, seo }) => (
+const Layout = ({ children, categories, menus, seo, submenus }) => (
   <>
-    <Navigation menus={menus} />
+    <Navigation menus={menus} submenus={submenus} />
     {children}
   </>
 );

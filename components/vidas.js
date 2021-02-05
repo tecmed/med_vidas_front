@@ -11,23 +11,27 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { blue, orange, grey } from '@material-ui/core/colors';
+import Box from '@material-ui/core/Box';
 import { CalendarTodayOutlined, 
         PeopleAltOutlined, 
         FavoriteBorderOutlined, 
         FavoriteOutlined, 
         PersonAddOutlined, 
+        PersonAddDisabledOutlined, 
         LocalConvenienceStoreOutlined,
         SyncOutlined} from '@material-ui/icons';
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-      '& > span': {
-        margin: theme.spacing(3),
-      },
-    },
-  }));
+    const useStyles = makeStyles((theme) => ({
+        root: {
+        '& > span': {
+            margin: theme.spacing(3),
+        },
+        },
+    }));
 
-const Vida = ({ vidas }) => {
+const Vida = ({ vidas, submenus }) => {
+
+    const { children, value, index, ...other } = submenus;
 
     const classes = useStyles();
 
@@ -37,7 +41,7 @@ const Vida = ({ vidas }) => {
     .uniq()
     .flatten()
     .value();
-    
+
   return (
     <div>
       <div>
@@ -60,17 +64,17 @@ const Vida = ({ vidas }) => {
         }); 
         var arr = _.values(results);
 
-            return[
-                <div key={index}>
-                {_.chain(results).groupBy('category').map((rows, name) => {
-                    return [
-                        <br key={index}></br>,
-                        <Typography key={name} variant="h6" className="singular">
-                            <p style={{ color: orange[700] }}><LocalConvenienceStoreOutlined fontSize="medium" style={{ color: orange[400] }}/>&nbsp;{name}</p>
-                        </Typography>]
+            return[ 
+                <div value={results}>
+                    {_.chain(results).groupBy('category').map((rows, name) => {
+                        return [
+                            <br key={index}></br>,
+                            <Typography key={name} variant="h6" className="singular">
+                                <p style={{ color: orange[700] }}><LocalConvenienceStoreOutlined fontSize="medium" style={{ color: orange[400] }}/>&nbsp;{name}</p>
+                            </Typography>]
+                        }
+                        ).uniq().flatten().value()
                     }
-                    ).uniq().flatten().value()
-                }
                 </div>,
                 <div key={index + Math.random()}>
                 <TableContainer component={Paper} className="uk-margin-medium-bottom">
@@ -88,6 +92,7 @@ const Vida = ({ vidas }) => {
                             <TableCell align="left" style={{ color: blue[800] }}><FavoriteBorderOutlined fontSize="small" style={{ color: blue[900] }}></FavoriteBorderOutlined>&nbsp;&nbsp;SOS&nbsp;UNIMED</TableCell>
                             <TableCell align="left" style={{ color: blue[800] }}><FavoriteOutlined fontSize="small" style={{ color: blue[900] }}></FavoriteOutlined>&nbsp;&nbsp;SOS&nbsp;MEDILAR</TableCell>
                             <TableCell align="left" style={{ color: blue[800] }}><PersonAddOutlined fontSize="small" style={{ color: blue[900] }}></PersonAddOutlined>&nbsp;&nbsp;VENDAS&nbsp;NOVAS</TableCell>
+                            <TableCell align="left" style={{ color: blue[800] }}><PersonAddDisabledOutlined fontSize="small" style={{ color: blue[900] }}></PersonAddDisabledOutlined>&nbsp;&nbsp;VENDAS&nbsp;CANCELADAS</TableCell>
                         </TableRow>
                         </TableHead>
                         <TableBody>
@@ -99,6 +104,7 @@ const Vida = ({ vidas }) => {
                                 <TableCell>{row.MassaTotal}</TableCell>
                                 <TableCell>{row.SosUnimed}</TableCell>
                                 <TableCell>{row.SosMedilar}</TableCell>
+                                <TableCell>{row.VendasNovas}</TableCell>
                                 <TableCell>{row.VendasNovas}</TableCell>
                             </TableRow>
                         ))}
