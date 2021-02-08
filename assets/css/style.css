@@ -18,6 +18,13 @@
   }
 
   .singular {
+    font-size: 6px;
+    margin-top: 1000px;
+    font-family: Roboto;
+    font-weight: 500;
+  }
+  
+  .singular-title {
     font-size: 160px;
     margin-top: 1000px;
     font-family: Staatliches;

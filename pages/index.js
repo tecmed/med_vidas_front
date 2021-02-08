@@ -4,12 +4,12 @@ import Vida from "../components/vidas";
 import Layout from "../components/layout";
 import { fetchAPI } from "../lib/api";
 
-const Home = ({ vidas, categories, homepage, menus, submenus }) => {
+const Home = ({ vidas, categories, homepage, menus, submenus, vigencias }) => {
   return (
     <Layout menus={menus} submenus={submenus}>
       <div className="uk-section">
         <div className="uk-container uk-container-expand">
-          <Vida vidas={vidas} submenus={submenus}/>
+          <Vida vidas={vidas} vigencias={vigencias}/>
         </div>
       </div>
     </Layout>
@@ -18,16 +18,17 @@ const Home = ({ vidas, categories, homepage, menus, submenus }) => {
 
 export async function getStaticProps() {
   // Run API calls in parallel
-  const [vidas, categories, homepage, menus, submenus] = await Promise.all([
+  const [vidas, categories, homepage, menus, submenus, vigencias] = await Promise.all([
     fetchAPI("/vidas?status=published"),
     fetchAPI("/categories"),
     fetchAPI("/homepage"),
     fetchAPI("/menus?status=true"),
     fetchAPI("/submenus"),
+    fetchAPI("/vigencias"),
   ]);
 
   return {
-    props: { vidas, menus, categories, homepage, submenus },
+    props: { vidas, menus, categories, homepage, submenus, vigencias },
     revalidate: 1,
   };
 }
