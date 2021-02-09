@@ -37,14 +37,6 @@ const Vida = ({ vidas, vigencias }) => {
     .groupBy('category.name')
     .map((vidas, name) => ({ name, vidas })) 
     .uniq()
-    .flatten()
-    .value();
-
-    const vigenciasGroup = _.chain(vigencias)
-    .groupBy('category.id')
-    .map((vigencias, id) => ({ id, vigencias })) 
-    .uniq()
-    .flatten()
     .value();
 
   return (
@@ -54,7 +46,6 @@ const Vida = ({ vidas, vigencias }) => {
         <div>
 {
     vidasGroup.map((vidas, function(num, index){
-        
 		var results =  _.map(num.vidas, function(opts){ 
 			return {
                     _id:                opts._id,
@@ -67,9 +58,10 @@ const Vida = ({ vidas, vigencias }) => {
                     VendasNovas:        opts.VendasNovas, 
                     VendasCanceladas:   opts.VendasCanceladas,
                     Publicado:          moment(opts.PublishedAt).format("DD/MM/yyyy").toLocaleUpperCase(),
-                    vigencia:           opts.category.vigencia
+                    Vigencia:           opts.category.vigencia
                      };
         }); 
+        
         var arr = _.values(results);
         
             return[ 
@@ -120,6 +112,14 @@ const Vida = ({ vidas, vigencias }) => {
                                 ])}    
                                 <TableRow >
                                     <TableCell scope="row">
+                                        {
+/*                                             _.chain(results).groupBy('Vigencia').map((rows, vigencia) => {
+                                            return [
+                                            <caption key={vigencia} text-align="right"><SyncOutlined fontSize="small" style={{ color: grey[400] }}/>&nbsp;vigente em {vigencia.fim}</caption>,
+                                            console.log(vigencia.fim)
+                                            ]}
+                                        ).flattenDeep().last().uniq().value() */
+                                        }
                                         <ReceiptOutlined fontSize="small" style={{ color: grey[500] }} />
                                     </TableCell>
                                 </TableRow>                     
