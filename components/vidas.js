@@ -35,11 +35,20 @@ const Vida = ({ vidas, vigencias }) => {
 
     const vidasGroup = _.chain(vidas)
     .groupBy('category.name')
-    .map((vidas, name) => ({ name, vidas })) 
+    .map((vidas, name) => ({ name, vidas }))
+    .flattenDeep() 
     .uniq()
     .value();
+    
+     function createVigencia(vigencia) {
+        return ({
+            id:         vigencia.id,
+            inicio:     vigencia.inicio,
+            fim:        vigencia.fim
+        });
+    }    
 
-  return (
+    return (
     <Container>
     <div>
       <div>
@@ -84,7 +93,7 @@ const Vida = ({ vidas, vigencias }) => {
                     <Table aria-label="customized table" >
                         {_.chain(results).groupBy('Publicado').map((rows, pub) => {
                             return [
-                            <caption key={pub} text-align="right"><SyncOutlined fontSize="small" style={{ color: grey[400] }}/>&nbsp;Atualizado em {pub}</caption>
+                            <caption key={pub} text-align="right" style={{ color: grey[500] }}><SyncOutlined fontSize="small" style={{ color: grey[400] }}/>&nbsp;Atualizado em {pub}</caption>
                             ]}
                         ).last().uniq().flatten().value()
                         }
@@ -108,19 +117,22 @@ const Vida = ({ vidas, vigencias }) => {
                                     <TableCell align="center">{row.VendasNovas}</TableCell>
                                     <TableCell align="center">{row.VendasCanceladas}</TableCell>
                                 </TableRow>,
-                                console.log(row) 
                                 ])}    
-                                <TableRow >
-                                    <TableCell scope="row">
-                                        {
-/*                                             _.chain(results).groupBy('Vigencia').map((rows, vigencia) => {
-                                            return [
-                                            <caption key={vigencia} text-align="right"><SyncOutlined fontSize="small" style={{ color: grey[400] }}/>&nbsp;vigente em {vigencia.fim}</caption>,
-                                            console.log(vigencia.fim)
-                                            ]}
-                                        ).flattenDeep().last().uniq().value() */
-                                        }
+                                <TableRow key={Math.random()}>
+                                    <TableCell colSpan={6} style={{ color: grey[500] }}>
                                         <ReceiptOutlined fontSize="small" style={{ color: grey[500] }} />
+                                        &nbsp;Vigente de&nbsp;
+                                        { 
+                                            _.chain(results).groupBy('Vigencia').map((rows, vigencia) => {
+                                                return [
+                                                        (rows && rows[0] !== 'undefined' && rows[0].Vigencia !== 'undefined') 
+                                                        ? (moment(rows[0].Vigencia.inicio).format("DD/MM/yyyy").toLocaleUpperCase() + " à " + moment(rows[0].Vigencia.fim).format("DD/MM/yyyy").toLocaleUpperCase()) 
+                                                        : undefined
+                                                ]}
+                                            ).last().uniq().value()                                                       
+                                        }
+                                        
+
                                     </TableCell>
                                 </TableRow>                     
                         </TableBody>
