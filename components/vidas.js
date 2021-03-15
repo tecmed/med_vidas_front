@@ -40,6 +40,8 @@ const Vida = ({ vidas, vigencias }) => {
     .uniq()
     .value();
     
+    const vidasGroupOrdered = _.orderBy(vidasGroup, ['name'],['asc']); 
+
      function createVigencia(vigencia) {
         return ({
             id:         vigencia.id,
@@ -54,7 +56,7 @@ const Vida = ({ vidas, vigencias }) => {
       <div>
         <div>
 {
-    vidasGroup.map((vidas, function(num, index){
+    vidasGroupOrdered.map((vidas, function(num, index){
 		var results =  _.map(num.vidas, function(opts){ 
 			return {
                     _id:                opts._id,
@@ -65,7 +67,8 @@ const Vida = ({ vidas, vigencias }) => {
                     SosUnimed:          opts.SosUnimed, 
                     SosMedilar:         opts.SosMedilar,
                     VendasNovas:        opts.VendasNovas, 
-                    VendasCanceladas:   opts.VendasCanceladas,
+                    CanceladosMedilar:  opts.CanceladosMedilar,
+                    CanceladosUnimed:   opts.CanceladosUnimed, 
                     Publicado:          moment(opts.PublishedAt).format("DD/MM/yyyy").toLocaleUpperCase(),
                     Vigencia:           opts.category.vigencia
                      };
@@ -104,7 +107,8 @@ const Vida = ({ vidas, vigencias }) => {
                             <TableCell align="center" style={{ color: blue[800] }}><LocalConvenienceStoreOutlined  style={{ color: blue[900] }}></LocalConvenienceStoreOutlined>&nbsp;&nbsp;SOS&nbsp;UNIMED</TableCell>
                             <TableCell align="center" style={{ color: blue[800] }}><LocalConvenienceStoreIcon style={{ color: blue[900] }}></LocalConvenienceStoreIcon>&nbsp;&nbsp;SOS&nbsp;MEDILAR</TableCell>
                             <TableCell align="center" style={{ color: blue[800] }}><PersonAddOutlined fontSize="small" style={{ color: blue[900] }}></PersonAddOutlined>&nbsp;&nbsp;VENDAS&nbsp;NOVAS</TableCell>
-                            <TableCell align="center" style={{ color: blue[800] }}><PersonAddDisabledOutlined fontSize="small" style={{ color: blue[900] }}></PersonAddDisabledOutlined>&nbsp;&nbsp;VENDAS&nbsp;CANCELADAS</TableCell>
+                            <TableCell align="center" style={{ color: blue[800] }}><PersonAddDisabledOutlined fontSize="small" style={{ color: blue[900] }}></PersonAddDisabledOutlined>&nbsp;&nbsp;CANCELADOS&nbsp;MEDILAR</TableCell>
+                            <TableCell align="center" style={{ color: blue[800] }}><PersonAddDisabledOutlined fontSize="small" style={{ color: blue[900] }}></PersonAddDisabledOutlined>&nbsp;&nbsp;CANCELADOS&nbsp;UNIMED</TableCell>
                         </TableRow>
                         </TableHead>
                         <TableBody>
@@ -115,11 +119,12 @@ const Vida = ({ vidas, vigencias }) => {
                                     <TableCell align="center">{row.SosUnimed}</TableCell>
                                     <TableCell align="center">{row.SosMedilar}</TableCell>
                                     <TableCell align="center">{row.VendasNovas}</TableCell>
-                                    <TableCell align="center">{row.VendasCanceladas}</TableCell>
+                                    <TableCell align="center">{row.CanceladosMedilar}</TableCell>
+                                    <TableCell align="center">{row.CanceladosUnimed}</TableCell>
                                 </TableRow>,
                                 ])}    
                                 <TableRow key={Math.random()}>
-                                    <TableCell colSpan={6} style={{ color: grey[500] }}>
+                                    <TableCell colSpan={7} style={{ color: grey[500] }}>
                                         <ReceiptOutlined fontSize="small" style={{ color: grey[500] }} />
                                         &nbsp;Vigente de&nbsp;
                                         { 
